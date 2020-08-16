@@ -24,6 +24,7 @@ These are basically the strategies that are used to fetch the users, it can vary
 - `/path/to/core/jwt/auth.jwt.strategy.ts`
 - `/path/to/core/api-key/auth.api-key.strategy.ts`
 - `/path/to/core/basic/auth.basic.strategy.ts`
+- `/path/to/core/auth.controller.ts`
 
 **Authorization**
 
@@ -32,3 +33,9 @@ The following file takes care of handling authorization, again, it can vary depe
 - `/path/to/core/auth.roles.guard.ts`
 
 ## Usage 🥋
+
+TBD
+
+## To-Do 📃
+
+TBD
