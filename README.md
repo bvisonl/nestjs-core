@@ -21,9 +21,7 @@ Database configuration can be changed in:
 
 These are basically the strategies that are used to fetch the users, it can vary depending on your properties and ways of fetching users.
 
-- `/path/to/core/jwt/auth.jwt.strategy.ts`
-- `/path/to/core/api-key/auth.api-key.strategy.ts`
-- `/path/to/core/basic/auth.basic.strategy.ts`
+- `/path/to/core/core.auth.service.ts`
 - `/path/to/core/auth.controller.ts`
 
 **Authorization**

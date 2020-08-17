@@ -3,10 +3,11 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EmployeeService } from 'src/modules/employee/employee.service';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class AuthJwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private configService: ConfigService, private employeeService: EmployeeService) {
+  constructor(private authService: AuthService, private configService: ConfigService) {
     super(
       {
         passReqToCallback: true,
@@ -16,8 +17,9 @@ export class AuthJwtStrategy extends PassportStrategy(Strategy) {
       },
       async (req, payload, verified) => {
         // Get the user
-        const employee = await this.employeeService.findByUsername(payload.username);
+        const employee = await this.authService.findByUsername(payload.username);
 
+        // Check if exists
         if (!employee) {
           return false;
         }
