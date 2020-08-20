@@ -14,4 +14,7 @@ export class CoreCredentialsEntity extends CoreEntity {
 
   @Column()
   apiKey: string;
+
+  @Column()
+  enabled: boolean;
 }
