@@ -12,14 +12,14 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Post('/')
   async authToken(@Request() req): Promise<AuthJwtTokenDto> {
-    const payload = { username: req.user.email, sub: req.user.id };
+    const payload = { username: req.user.username, sub: req.user.id };
     return this.authJwtService.generateToken(payload);
   }
 
   @UseGuards(AuthJwtRefreshGuard)
   @Post('/refreshToken')
   async refreshToken(@Request() req): Promise<AuthJwtTokenDto> {
-    const payload = { username: req.user.email, sub: req.user.id };
+    const payload = { username: req.user.username, sub: req.user.id };
     return this.authJwtService.generateToken(payload);
   }
 }

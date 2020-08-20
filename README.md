@@ -21,8 +21,8 @@ Database configuration can be changed in:
 
 These are basically the strategies that are used to fetch the users, it can vary depending on your properties and ways of fetching users.
 
-- `/path/to/core/core.auth.service.ts`
-- `/path/to/core/auth.controller.ts`
+- `/path/to/core/auth/auth.service.ts`
+- `/path/to/core/auth/auth.controller.ts`
 
 **Authorization**
 
