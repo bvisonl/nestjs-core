@@ -7,6 +7,18 @@ This module is a core module used to provide some boilerplate when configuring n
 3. Database configuration
 4. Entities & DTO base models
 
+## Dependencies
+
+The following dependencies should be installed
+
+```bash
+npm install @nestjs/config @nestjs/jwt @nestjs/passport @nestjs/typeorm @types/bcryptjs auth bcryptjs class-transformer class-validator passport passport-http passport-jwt passport-local pg postgres typeorm @nestjs/passport-localapikey
+```
+
+```bash
+npm install --dev @types/passport-jwt
+```
+
 ## Configuration 🔧
 
 In order to use the core module the following files will need to be edited and adjusted at will:
