@@ -7,7 +7,7 @@ import { AuthService } from '../auth.service';
 export class AuthApiKeyStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
     super({ passReqToCallback: true, apiKeyField: 'apiKey' }, async (req, apiKey, verified) => {
-      const user = this.authService.findByApiKey(apiKey);
+      const user = this.authService.findByApiKey(req, apiKey);
 
       // Check if the user was found
       if (!user) {

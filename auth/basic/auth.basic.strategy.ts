@@ -8,7 +8,7 @@ import { AuthService } from '../auth.service';
 export class AuthBasicStrategy extends PassportStrategy(BasicStrategy) {
   constructor(private authService: AuthService) {
     super({ passReqToCallback: true }, async (req, username, password, verified) => {
-      const user = await this.authService.findByUsername(username);
+      const user = await this.authService.findByUsername(req, username);
 
       // Validate credentials
       if (!user || !bcrypt.compareSync(password, user.password)) {

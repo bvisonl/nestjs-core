@@ -17,7 +17,7 @@ export class AuthJwtStrategy extends PassportStrategy(Strategy) {
       },
       async (req, payload, verified) => {
         // Get the user
-        const employee = await this.authService.findByUsername(payload.username);
+        const employee = await this.authService.findByUsername(req, payload.username);
 
         // Check if exists
         if (!employee) {

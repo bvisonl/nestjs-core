@@ -17,4 +17,7 @@ export class CoreCredentialsEntity extends CoreEntity {
 
   @Column()
   enabled: boolean;
+
+  @Column()
+  lastUsed: Date;
 }

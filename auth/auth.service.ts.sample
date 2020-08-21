@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/modules/user/user.service';
+import { UserService } from '../../user/services/user.service';
 import { CoreCredentialsEntity } from '../entities/core.credentials.entity';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthService {
   constructor(private userService: UserService) {}
 
-  async findByUsername(username: string): Promise<CoreCredentialsEntity> {
+  async findByUsername(req: Request, username: string): Promise<CoreCredentialsEntity> {
     return await this.userService.findByUsername(username);
   }
 
-  async findByApiKey(apiKey: string): Promise<CoreCredentialsEntity> {
+  async findByApiKey(req: Request, apiKey: string): Promise<CoreCredentialsEntity> {
     return await this.userService.findByApiKey(apiKey);
   }
 }

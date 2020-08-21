@@ -21,14 +21,14 @@ Database configuration can be changed in:
 
 These are basically the strategies that are used to fetch the users, it can vary depending on your properties and ways of fetching users.
 
-- `/path/to/core/auth/auth.service.ts`
+- Must implement the `/path/to/core/auth/auth.service.ts` (see `/path/to/core/auth/auth.service.ts.sample`)
 - `/path/to/core/auth/auth.controller.ts`
 
 **Authorization**
 
 The following file takes care of handling authorization, again, it can vary depending on how you are managing roles for your project so it should also be modified.
 
-- `/path/to/core/auth.roles.guard.ts`
+- Must implement `/path/to/core/auth.roles.guard.ts` (see `/path/to/core/auth/auth.roles.guard.ts.sample`)
 
 ## Usage 🥋
 
