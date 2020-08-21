@@ -12,7 +12,7 @@ This module is a core module used to provide some boilerplate when configuring n
 The following dependencies should be installed
 
 ```bash
-npm install @nestjs/config @nestjs/jwt @nestjs/passport @nestjs/typeorm @types/bcryptjs auth bcryptjs class-transformer class-validator passport passport-http passport-jwt passport-local pg postgres typeorm @nestjs/passport-localapikey
+npm install @nestjs/config @nestjs/jwt @nestjs/passport @nestjs/typeorm @types/bcryptjs auth bcryptjs class-transformer class-validator passport passport-http passport-jwt passport-local pg postgres typeorm passport-localapikey
 ```
 
 ```bash
