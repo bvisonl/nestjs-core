@@ -1,10 +1,10 @@
 import { Injectable, CanActivate, ExecutionContext, HttpException, HttpStatus } from '@nestjs/common';
 import { Request } from 'express';
-import { AuthJwtService } from './auth.jwt.service';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class AuthJwtRefreshGuard implements CanActivate {
-  constructor(private authJwtService: AuthJwtService, private employeeService: EmployeeService) {}
+  constructor(private authJwtService: AuthJwtService, private authService: AuthService) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
 
@@ -20,7 +20,7 @@ export class AuthJwtRefreshGuard implements CanActivate {
         throw new HttpException('Invalid credentials.', HttpStatus.BAD_REQUEST);
       }
 
-      const employee = await this.employeeService.findByUsername(token.username);
+      const employee = await this.authService.findByUsername(request, token.username);
 
       // Validate credentials
       if (!employee) {
