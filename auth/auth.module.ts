@@ -16,13 +16,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthJwtRefreshToken } from './jwt/auth.jwt.refresh-token.entity';
 import { AuthJwtRefreshTokenRepository } from './jwt/auth..jwt.refresh-token.repository';
 import { AuthJwtService } from './jwt/auth.jwt.service';
-import { EmployeeModule } from 'src/modules/employee/employee.module';
 import { AuthService } from './auth.service';
 
 @Global()
 @Module({
   imports: [
-    EmployeeModule,
     TypeOrmModule.forFeature([AuthJwtRefreshToken, AuthJwtRefreshTokenRepository]),
     PassportModule,
     JwtModule.registerAsync({
