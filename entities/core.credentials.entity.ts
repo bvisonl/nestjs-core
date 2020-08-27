@@ -1,23 +1,31 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BeforeUpdate } from 'typeorm';
 import { CoreEntity } from './core.entity';
+import { IsNotEmpty } from 'class-validator';
 
 @Entity()
 export class CoreCredentialsEntity extends CoreEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
+  @IsNotEmpty()
   username: string;
 
   @Column()
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
+  resetPasswordToken: string;
+
+  @Column({ nullable: true })
+  resetPasswordTokenExpiration: Date;
+
+  @Column({ nullable: true, unique: true })
   apiKey: string;
 
-  @Column()
+  @Column({ default: true })
   enabled: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   lastUsed: Date;
 }

@@ -1,4 +1,4 @@
-import { Module, Global } from '@nestjs/common';
+import { Module, Global, DynamicModule } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
@@ -18,32 +18,39 @@ import { AuthJwtRefreshTokenRepository } from './jwt/auth..jwt.refresh-token.rep
 import { AuthJwtService } from './jwt/auth.jwt.service';
 import { AuthService } from './auth.service';
 
-@Global()
-@Module({
-  imports: [
-    TypeOrmModule.forFeature([AuthJwtRefreshToken, AuthJwtRefreshTokenRepository]),
-    PassportModule,
-    JwtModule.registerAsync({
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_ACCESS_TOKEN_SECRET'),
-      }),
-      inject: [ConfigService],
-    }),
-  ],
-  controllers: [AuthController],
-  providers: [
-    AuthService,
-    AuthGuard,
-    AuthRolesGuard,
-    AuthBasicGuard,
-    AuthBasicStrategy,
-    AuthApiKeyGuard,
-    AuthApiKeyStrategy,
-    AuthJwtGuard,
-    AuthJwtStrategy,
-    AuthJwtRefreshGuard,
-    AuthJwtService,
-  ],
-  exports: [AuthGuard, AuthBasicGuard, AuthJwtGuard, AuthApiKeyGuard, AuthRolesGuard],
-})
-export class AuthModule {}
+@Module({})
+export class AuthModule {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  static register(config): DynamicModule {
+    return {
+      module: AuthModule,
+      imports: [
+        ...config.imports,
+        TypeOrmModule.forFeature([AuthJwtRefreshToken, AuthJwtRefreshTokenRepository]),
+        PassportModule,
+        JwtModule.registerAsync({
+          useFactory: async (configService: ConfigService) => ({
+            secret: configService.get<string>('JWT_ACCESS_TOKEN_SECRET'),
+          }),
+          inject: [ConfigService],
+        }),
+      ],
+      controllers: [AuthController],
+      providers: [
+        ...config.providers,
+        AuthService,
+        AuthGuard,
+        AuthRolesGuard,
+        AuthBasicGuard,
+        AuthBasicStrategy,
+        AuthApiKeyGuard,
+        AuthApiKeyStrategy,
+        AuthJwtGuard,
+        AuthJwtStrategy,
+        AuthJwtRefreshGuard,
+        AuthJwtService,
+      ],
+      exports: [AuthGuard, AuthBasicGuard, AuthJwtGuard, AuthApiKeyGuard, AuthRolesGuard],
+    };
+  }
+}
