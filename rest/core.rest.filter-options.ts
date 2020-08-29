@@ -5,7 +5,7 @@ export class FilterOptions {
   limit: number;
   offset: number;
   search: string;
-  filters: Filter[];
+  filters: any;
 
   constructor(request: Request) {
     // Set the page number
@@ -23,20 +23,11 @@ export class FilterOptions {
     this.search = request.query['search'] ? request.query['search'].toString() : '';
 
     // Set the filters
+    this.filters = request.query['filters'];
   }
 
   setMaxResults(maxResults: number): FilterOptions {
     this.limit = this.limit < maxResults ? this.limit : maxResults;
     return this;
   }
-}
-
-class Filter {
-  key: string;
-  value: string | FilterRange;
-}
-
-class FilterRange {
-  from: string | number | Date;
-  to: string | number | Date;
 }
