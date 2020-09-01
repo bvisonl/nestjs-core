@@ -3,6 +3,8 @@ import { ValidationError } from 'class-validator';
 
 export class InvalidFormException extends HttpException {
   constructor(validationErrors: ValidationError[], message?: string, additionalErrors?: string[]) {
+    additionalErrors = additionalErrors || [];
+
     super(
       {
         status: HttpStatus.BAD_REQUEST,
