@@ -2,7 +2,6 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeUpdate } from 'typeorm';
 import { CoreEntity } from './core.entity';
 import { IsNotEmpty } from 'class-validator';
 
-@Entity()
 export class CoreCredentialsEntity extends CoreEntity {
   @PrimaryGeneratedColumn()
   id: number;

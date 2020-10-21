@@ -2,7 +2,6 @@ import { Module, Global, DynamicModule } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 import { AuthBasicStrategy } from './basic/auth.basic.strategy';
 import { AuthJwtStrategy } from './jwt/auth.jwt.strategy';
 import { AuthBasicGuard } from './basic/auth.basic.guard';
@@ -17,6 +16,7 @@ import { AuthJwtRefreshToken } from './jwt/auth.jwt.refresh-token.entity';
 import { AuthJwtRefreshTokenRepository } from './jwt/auth..jwt.refresh-token.repository';
 import { AuthJwtService } from './jwt/auth.jwt.service';
 import { AuthService } from './auth.service';
+import * as env from 'env-var';
 
 @Module({})
 export class AuthModule {
@@ -29,10 +29,13 @@ export class AuthModule {
         TypeOrmModule.forFeature([AuthJwtRefreshToken, AuthJwtRefreshTokenRepository]),
         PassportModule,
         JwtModule.registerAsync({
-          useFactory: async (configService: ConfigService) => ({
-            secret: configService.get<string>('JWT_ACCESS_TOKEN_SECRET'),
+          useFactory: async () => ({
+            secret: env
+              .get('JWT_ACCESS_TOKEN_SECRET')
+              .required()
+              .asString(),
           }),
-          inject: [ConfigService],
+          inject: [],
         }),
       ],
       controllers: [AuthController],

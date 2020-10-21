@@ -1,37 +1,51 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 import AuthJwtPayloadDto from './auth.jwt.payload.dto';
 import { AuthJwtRefreshTokenRepository } from './auth..jwt.refresh-token.repository';
 import AuthJwtTokenDto from './auth.jwt.token.dto';
+import * as env from 'env-var';
 
 @Injectable()
 export class AuthJwtService {
   private readonly refreshOptions;
   private readonly accessOptions;
 
-  constructor(
-    private jwtService: JwtService,
-    private configService: ConfigService,
-    private authJwtRefreshTokenRepository: AuthJwtRefreshTokenRepository,
-  ) {
+  constructor(private jwtService: JwtService, private authJwtRefreshTokenRepository: AuthJwtRefreshTokenRepository) {
     this.refreshOptions = {
-      expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION'),
-      secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
+      expiresIn: env
+        .get('JWT_REFRESH_TOKEN_EXPIRATION')
+        .required()
+        .asString(),
+      secret: env
+        .get('JWT_REFRESH_TOKEN_SECRET')
+        .required()
+        .asString(),
     };
 
     this.accessOptions = {
-      expiresIn: this.configService.get<string>('JWT_ACCESS_TOKEN_EXPIRATION'),
-      secret: this.configService.get<string>('JWT_ACCESS_TOKEN_SECRET'),
+      expiresIn: env
+        .get('JWT_ACCESS_TOKEN_EXPIRATION')
+        .required()
+        .asString(),
+      secret: env
+        .get('JWT_ACCESS_TOKEN_SECRET')
+        .required()
+        .asString(),
     };
   }
 
   async generateToken(payload: AuthJwtPayloadDto): Promise<AuthJwtTokenDto> {
     return {
-      access_token_expires_in: this.configService.get<string>('JWT_ACCESS_TOKEN_EXPIRATION'),
+      access_token_expires_in: env
+        .get('JWT_ACCESS_TOKEN_EXPIRATION')
+        .required()
+        .asString(),
       access_token: this.generateAccessToken(payload),
       refresh_token: await this.generateRefreshToken(payload),
-      refresh_token_expires_in: this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION'),
+      refresh_token_expires_in: env
+        .get('JWT_REFRESH_TOKEN_EXPIRATION')
+        .required()
+        .asString(),
     };
   }
 
